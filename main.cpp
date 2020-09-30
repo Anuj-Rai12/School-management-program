@@ -1,6 +1,9 @@
 #include<iostream>
 #include<fstream>
 #include<cstring>
+#include<string>
+#include<sstream>
+#include <vector>
 #define MAX 10
 using namespace std;
 class stud
@@ -73,12 +76,190 @@ else
 }
 file2.close();
 }
-
+void  create_login_(int r)
+{
+    string re,pas;
+    switch (r)
+    {
+        case 1:
+        {
+            //create account
+    printf("Enter the Reg_No.\n");
+    cin>>re;
+    printf("Enter the Password.\n");
+    cin>>pas;
+    ofstream ad;
+    ifstream ok;
+    if(pas.length()>8)//password length
+    {        
+    ok.open(re);
+    if(!ok.is_open())//ckecking file  is present or not
+    {
+    ad.open(re,ios::app);
+    if(ad.is_open())//file created
+    {
+        ad<<pas;
+        printf("Account created successfully\n");
+       // return 1;//creating
+    }
+    else//unfortnutly no create
+    {
+        printf("Cannot create file\n");
+    }
+    }
+    else//ckecking file  is present or not
+    {
+        printf("Reg.no  Invalid :/  \n");
+    }
+    }
+    else//password length
+    {
+        printf("Password  is not Strong \n");
+    }      
+            ad.close();
+            ok.close();
+            //closeing
+        }
+            break;
+      case 2:
+      {   
+      // email login
+            char r;
+           
+            int ak,u=0;
+            //vector<char>v;
+            printf("Enter the Reg_No.\n");
+    cin>>re;
+    printf("Enter the Password.\n");
+    cin>>pas;
+     //string sl[];
+    char s[pas.length()];
+    char slk[pas.length()];
+    for(int i=0;i<pas.length();i++)//for input value
+    {
+        slk[i]=pas[i];
+    }
+    /*for(int i=0;i<pas.length();i++)//for outputing value
+    {
+        cout<<slk[i];
+    }5
+     *
+    cout<<endl;*/
+    ifstream cjk;
+    cjk.open(re);
+    if(cjk.is_open())
+    {
+        
+        while(cjk.good())
+        {
+            cjk.get(r);
+            s[u]=r;
+            u++;
+        }
+        /*cout<<"the value of read \n";
+       for(int i=0;i<pas.length();i++)//for outputing 
+    {
+        cout<<s[i];
+    }*/
+        cout<<endl;
+        int al=0;
+        for(int i=0;i<pas.length();i++)
+        {
+            if(slk[i]==s[i])
+            {
+                al++;
+            }
+        }
+        
+        if(al==19)
+        {
+        printf("Login Successfully \n");
+        string str;
+        printf("Enter the Student name.\n");
+        cin>>str;
+        admin_view(str);
+         }
+        
+        else
+        {
+            printf("Wrong Password >:(\n");
+        }
+    }
+    else
+    {
+      printf("Account not found\n");
+    }
+    cjk.close();
+    //closeing
+    }
+           break;
+        default :
+            printf("Enter the correct option\n");
+    }
+}
 void stud::dispaly()
 {
     printf("%d\t%d\t%s\t%d\n",reg,id,name,mark);
 }
-void login(string str,string em)
+
+  void edit(string nma)
+
+     {
+
+         ostringstream txt;
+
+         ifstream inp;
+
+         inp.open(nma);
+
+         if(inp.is_open())
+
+         {
+
+             txt<<inp.rdbuf();
+
+             string str=txt.str();
+
+           string file_found;
+
+           string file_replace;
+
+           cout<<"Enter the word or no. which you want  to replace with\n";
+
+           cin>>file_found;
+
+           cout<<"Enter the  the word or  no. with you want to replace \n";
+
+           cin>>file_replace;
+
+           size_t pos=str.find(file_found);
+
+           str.replace(pos,string(file_found).length(),file_replace);
+
+           inp.close();
+
+           ofstream inff;
+
+           inff.open(nma);
+
+           inff<<str;
+
+           inff.close();
+
+           cout<<"\n Changes  Applied:)\n";
+
+         }
+
+         else
+
+         {
+
+           cout<<"\nFile Not Found:(\n";  
+
+         }
+
+     }
+  void login(string str,string em)//Teacher Login System
 {
     string email,password;
     printf("Welcome to ums login System-login\nEnter your ums email.id:\n");
@@ -88,6 +269,7 @@ void login(string str,string em)
     if(email==em&&password.length()>8)
     {
         admin_view(str);
+        edit(str);
     }
     else
     {
@@ -128,11 +310,13 @@ int main()
     
                 break;
             case 2:
-              printf("Enter the Student name.\n");
-              cin>>nm;
+                int okl;
+                printf("2-Press (1):Create The account\n2-Press (2):Login\n");
+                cin>>okl;
+                create_login_(okl);
               //printf("Name   \tRef.no\tID\tMarks\n");
               //admin_view(nm);
-              login(nm,"anujrai04082002.0@gmail.com");
+              //login(nm,"anujrai04082002.0@gmail.com");
                 break;
             case 3:
                 printf("Welcome to Teacher Section\n");
@@ -142,14 +326,28 @@ int main()
                 if(optio[0]==1)
                 {
                     admin_view("Student.txt");
-                    //next edit the code()
+                    printf("Want to edit some-thing :)\npress 1:For Edit:)\nPress 2:For Neutral:)\n");
+                    cin>>optio[1];
+                    if(optio[1]==1)
+                    {
+                        printf("Editor option :).......\n\n");
+                    edit("Student.txt");
+                    }
+                    else if(optio[1]==2)
+                    {
+                        printf("Thank you :)\n");
+                    }
+                    else
+                    {
+                        printf("Please enter correct option :(\n");
+                    }
                 }
                 else if(optio[0]==2)
                 { 
                     printf("Enter the Student name.\n");
                     cin>>nm;
                      login(nm,"anuj.12013239@lpu.in");
-                     //next edit the code()
+                     
                 }
                 else
                 {
