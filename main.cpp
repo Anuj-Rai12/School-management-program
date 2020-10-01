@@ -262,6 +262,7 @@ void stud::dispaly()
   void login(string str,string em)//Teacher Login System
 {
     string email,password;
+    int nob;
     printf("Welcome to ums login System-login\nEnter your ums email.id:\n");
     cin>>email;
     printf("Enter you password\n");
@@ -269,13 +270,28 @@ void stud::dispaly()
     if(email==em&&password.length()>8)
     {
         admin_view(str);
-        edit(str);
-    }
+        printf("Want to edit some-thing :)\npress 1:For Edit:)\nPress 2:For Neutral:)\n");  
+                   cin>>nob;
+                   if(nob==1)
+                   {
+                       edit(str);
+                   }
+                   else if(nob==2)
+                   {
+                       printf("Thank you :)\n");
+                   }
+                   else
+                   {
+                       printf("Please enter the correct option :(\n");
+                   }
+                   
+                }
     else
     {
         printf("\nPlease Enter the correct password and email\n");
     }
-}
+  }
+  
 int main()
 {
     stud op[MAX];
