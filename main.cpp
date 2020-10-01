@@ -170,8 +170,8 @@ void  create_login_(int r)
                 al++;
             }
         }
-        
-        if(al==19)
+     //   cout<<"al value-->"<<al<<"pas"<<pas.length()<<"\n";
+        if(al==pas.length())
         {
         printf("Login Successfully \n");
         string str;
